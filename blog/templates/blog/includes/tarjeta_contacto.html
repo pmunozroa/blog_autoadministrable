@@ -1,0 +1,45 @@
+{% block tarjeta %}
+{% load blog_extras %}
+<div class="group">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="skills portfolio-info-card">
+                <h2>Habilidad</h2>
+                {% preview_posts as all_posts %}
+                {% get_order_cat_by_total_posts as order_cats %}
+                {% for cat in order_cats %}
+                <h3>{{cat.nombre}}</h3>
+                <div class="progress">
+                    {% count_posts cat.id as cat_posts %}
+                    <div class="progress-bar" aria-valuenow="{{cat_posts}}" aria-valuemin="0"
+                        aria-valuemax="{{all_posts|length}}"
+                        style="width: {% get_percentage all_posts|length cat_posts %}%;"><span class="sr-only"></span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="contact-info portfolio-info-card">
+                <h2>Información de contacto</h2>
+                <div class="row">
+                    <div class="col-1"><i class="icon ion-android-calendar icon"></i></div>
+                    <div class="col-9"><span>{{configuracion.fecha_nacimiento}}</span></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"><i class="icon ion-person icon"></i></div>
+                    <div class="col-9"><span>{{configuracion.nombre_completo}}</span></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"><i class="icon ion-ios-telephone icon"></i></div>
+                    <div class="col-9"><span>+569 {{configuracion.numero_contacto}}</span></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"><i class="icon ion-at icon"></i></div>
+                    <div class="col-9"><span>{{configuracion.email_contacto}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock tarjeta %}

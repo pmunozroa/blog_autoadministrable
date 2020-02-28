@@ -1,0 +1,42 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}
+Titulo
+{% endblock title %}
+
+{% block header %}
+{% include "blog/includes/header.html" %}
+{% endblock header %}
+
+{% block content %}
+<main class="page project-page">
+    <section class="portfolio-block project">
+        <div class="container">
+            <div class="heading">
+                <h2>
+                    <p class="lead">{{configuracion.nombre}}</p>
+                    <p>({{configuracion.apodo}})</p>
+                </h2>
+                {% block avatar %}
+                {% include "blog/includes/avatar.html" %}
+                {% endblock avatar %}
+                <p class="lead">
+                    {% block redes_sociales %}
+                    {% include "blog/includes/redes.html" %}
+                    {% endblock redes_sociales %}
+                </p>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12 info">
+                    <h3>Acerca de mi</h3>
+                    <p class="text-justify">{{configuracion.descripcion_general}}</p>
+                </div>
+            </div>
+            {% block tarjeta %}
+              {% include "blog/includes/tarjeta_contacto.html" %}
+            {% endblock tarjeta %}
+        </div>
+    </section>
+</main>
+{% endblock content %}

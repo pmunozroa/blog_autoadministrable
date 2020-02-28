@@ -1,0 +1,33 @@
+{% block nav %}
+{% load blog_extras %}
+<nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
+    <div class="container">
+        <a class="navbar-brand logo" href="{% url 'blog:home' %}">
+            <img width="125" height="50" src="{{configuracion.banner.url}}">
+        </a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle
+                navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="nav navbar-nav ml-auto nav-pills">
+                <li class="nav-item" role="presentation"><a class="nav-link {% is_active 'blog:home' request.path %}"
+                        href="{% url 'blog:home' %}">Inicio</a></li>
+                <li class="nav-item dropdown" role="presentation">
+                    <a class="nav-link dropdown-toggle {% is_active 'blog:categorias' request.path %}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categorias</a>
+                    <div class="dropdown-menu dropdown-menu-down">
+                        {% for cat in categorias_listado %}
+                            <a class="dropdown-item" href="{% url 'blog:categorias' cat.id cat.nombre|slugify %}">{{cat.nombre}}</a>
+                        {% endfor %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'blog:categorias' %}">Todas</a>
+                    </div>
+                </li>
+                <li class="nav-item" role="presentation"><a class="nav-link {% is_active 'blog:posts' request.path %}" href="{% url 'blog:posts' %}">Posts</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link {% is_active 'blog:contacto' request.path %}" href="{% url 'blog:contacto' %}">Contacto</a></li>
+                {% any_experience as cv_ok %}
+                {% if cv_ok %}
+                <li class="nav-item" role="presentation"><a class="nav-link {% is_active 'blog:curriculum' request.path %}" href="{% url 'blog:curriculum' %}">Curriculum</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock nav %}

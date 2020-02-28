@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}
+Contacto
+{% endblock title %}
+
+{% block content %}
+<main class="page contact-page">
+    <section class="portfolio-block contact">
+        <div class="container">
+            <div class="heading">
+                <h2>Contactame</h2>
+            </div>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="{% if message.tags %}{{ message.tags }} {% endif %}alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% else %}
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-block btn-primary" value="Enviar">
+            </form>
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+Apóyame
+{% endblock title %}
+
+{% block content %}
+<main class="page project-page">
+  <section class="portfolio-block project">
+    <div class="container">
+      <div class="heading">
+        <h2>Cómo ayudarme?</h2>
+      </div>
+      <div class="row">
+        {% for b in banners %}
+        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 text-center">
+          <a href="{{b.link}}" target="_blank" rel="noopener noreferrer">
+          <div class="container-img scale-on-hover"
+            style="background: url({{b.imagen_banner.url}}) no-repeat; background-size: 100% auto;box-shadow:inset 0 0 0 100px rgba(255, 255, 255, 0.75); padding-top: 50px; padding-bottom: 50px">
+            <p class="lead" style="color: black;font-weight: bolder; font-size:large">
+              {{b.titulo}}
+            </p>
+          </div>
+          </a>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+          <p class="lead">No hay ningun banner aún :(</p>
+        </div>
+        {% endfor %}
+      </div>
+
+  </section>
+</main>
+{% endblock content %}

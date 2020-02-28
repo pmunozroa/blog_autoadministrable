@@ -1,0 +1,42 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}
+Blog de {{configuracion.apodo}}
+{% endblock title %}
+
+
+
+{% block content %}
+<main class="page lanidng-page">
+{% block header %}
+{% include "blog/includes/header.html" with extras=True %}
+{% endblock header %}
+{% load blog_extras %}
+<section class="portfolio-block photography">
+    <div class="container">
+        <div class="row no-gutters">
+            {% preview_posts as posts %}
+            {% for post in posts|slice:3 %}
+                {% include "blog/includes/post.html" with post=post %}
+            {% empty %}
+            <div class="col-md-12 col-lg-12 text-center">
+                <p class="lead">No hay nuevo contenido :(</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+</main>
+{% endblock content %}
+
+{% block footer_content %}
+<section class="portfolio-block call-to-action border-bottom">
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center content">
+            <h3>Te gustaría cotizar conmigo?</h3><a href="{% url 'blog:contacto' %}"<button class="btn btn-outline-primary btn-lg" type="button">Contáctame</button></a>
+        </div>
+    </div>
+</section>
+{% endblock footer_content %}
+

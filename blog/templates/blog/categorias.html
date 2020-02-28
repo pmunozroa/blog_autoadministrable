@@ -1,0 +1,50 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load blog_extras %}
+
+{% block title %}
+
+Categorias{% if request.resolver_match.kwargs.pk|get_cat_name %}{{ request.resolver_match.kwargs.pk|get_cat_name }}{%else%} | Todas{% endif %}
+{% endblock title %}
+
+{% block content %}
+<main class="page projects-page">
+    <section class="portfolio-block projects-with-sidebar">
+        <div class="container">
+            <div class="heading">
+                <h2>Todas las categorias</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="list-unstyled sidebar">
+                        <li><a class="{% is_active 'blog:categorias' request.path %}"
+                                href="{% url 'blog:categorias' %}">Todos</a></li>
+                        {% for cat in categorias_listado %}
+                        <li>
+                            <a class="{% is_active_category 'blog:categorias' cat.id cat.nombre|slugify request.path %}"
+                                href="{% url 'blog:categorias' cat.id cat.nombre|slugify %}">
+                                {{cat.nombre}}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        {% for post in  posts %}
+                        {% include "blog/includes/post.html" with post=post %}
+                        {% empty %}
+                        <div class="col-md-126 col-lg-12 text-center">
+                            <p class="lead">No hay ningun post :(</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% block pagination %}
+                    {% include "blog/includes/pagination.html" %}
+                    {% endblock pagination %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

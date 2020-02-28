@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+{% load blog_extras %}
+{% get_configuration as configuracion %}
+{% get_cats as categorias_listado %}
+{% get_rrss as rrss %}
+{% block head %}
+{% include "blog/includes/head.html" %}
+{% endblock head %}
+<title>{% block title %}{% endblock title %}</title>
+<body>
+    {% block nav %}
+    {% include "blog/includes/nav.html" %}
+    {% endblock nav %}
+    {% block content %}
+    {% endblock content %}
+    {% block skills %}
+    {% endblock skills %}
+    {% block footer_content %}
+    {% endblock footer_content %}
+    {% block hero %}
+    {% endblock hero %}
+    {% block footer %}
+    {% include "blog/includes/footer.html" %}
+    {% endblock footer %}
+</body>
+{% block script %}
+{% include "blog/includes/scripts.html" %}
+{% endblock script %}
+
+</html>

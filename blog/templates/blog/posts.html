@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+Todos los posts
+{% endblock title %}
+
+{% block content %}
+<main class="page projects-page" style="height: 100%">
+    <section class="portfolio-block projects-cards">
+        <div class="container">
+            <div class="heading">
+                <h2>Todos los posts</h2>
+            </div>
+            <div class="row">
+                {% for p in posts %}
+                {% include "blog/includes/post.html" with post=p %}
+                {% empty %}
+                <div class="col-md-12 col-lg-12 text-center">
+                    <p class="lead">No hay ningun post :(</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% block pagination %}
+            {% include "blog/includes/pagination.html" %}
+            {% endblock pagination %}
+        </div>
+    </section>
+</main>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+Curriculum
+{% endblock title %}
+
+{% block content %}
+{% load blog_extras %}
+<main class="page cv-page">
+    {% block header %}
+    {% include "blog/includes/header.html" %}
+    {% endblock header %}
+    <section class="portfolio-block cv">
+        <div class="container">
+            <!-- REHACER LAS EXPERIENCIAS Y AÑADIR TIPOS DE EXPERIENCIAS COMO MODELO -->
+            {% for exp in experiencias %}
+            {% get_exp_by_cat exp.id as cv_exp %}
+                {% if cv_exp|length > 0 %}
+                    {% block experiencia %}
+                    {% include "blog/includes/cv_experiencia.html" with exp=cv_exp tipo=exp.tipo_experiencia %}
+                    {% endblock experiencia %}
+                {% endif %}
+            {% endfor %}
+            {% block tarjeta %}
+            {% include "blog/includes/tarjeta_contacto.html" %}
+            {% endblock tarjeta %}
+        </div>
+    </section>
+</main>
+{% endblock content %}

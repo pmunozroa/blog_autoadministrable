@@ -1,0 +1,13 @@
+{% block head %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    {% if configuracion.share_this %}
+    <script async src="{{configuracion.share_this}}"></script>
+    {% endif %}
+    {% block styles %}
+      {% include "blog/includes/styles.html" %}
+    {% endblock styles %}
+</head>
+{% endblock head %}

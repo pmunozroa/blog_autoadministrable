@@ -1,0 +1,12 @@
+{% block redes_sociales %}
+{% load static %}
+<div class="container">
+    <div class="social-icons">
+        {% for r in rrss %}
+            <a href="{{r.link}}" target="_blank">
+            <ion-icon class="{{r.grosor}}" size="{{r.size}}" src="{% static 'blog/ionicons/'|add:r.tipo|add:'.svg' %}"></ion-icon>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock redes_sociales %}

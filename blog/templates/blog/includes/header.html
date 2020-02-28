@@ -1,0 +1,27 @@
+{% block header %}
+{% load static %}
+<section class="portfolio-block block-intro">
+    <div class="container">
+        {% block avatar %}
+        {% include "blog/includes/avatar.html" %}
+        {% endblock avatar %}
+
+        {% if extras %}
+
+        {% block redes_sociales %}
+        {% include "blog/includes/redes.html" %}
+        {% endblock redes_sociales %}
+        <p class="lead"><strong>{{configuracion.nombre}} ({{configuracion.apodo}})</strong></p>
+        <div class="about-me">
+            <p>{{configuracion.descripcion_corta|safe}}</p>
+            <a class="btn btn-outline-primary" role="button" href="{% url 'blog:apoyo' %}">Apóyame</a>
+        </div>
+        {% else %}
+        <p class="lead"><strong>{{configuracion.nombre_completo}}</strong></p>
+        <div class="about-me">
+            <span class="form-text text-muted">{{configuracion.descripcion_general|safe}}</span>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock header %}

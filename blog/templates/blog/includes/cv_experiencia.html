@@ -1,0 +1,14 @@
+{% block experiencia %}
+{% load blog_extras %}
+{% experiencie_type tipo as experiencia %}
+<div class="{{experiencia.clase}} group">
+    <div class="heading">
+        <h2 class="text-center">{{experiencia.titulo}}</h2>
+    </div>
+    {% for e in exp %}
+    {% block expe %}
+      {% include "blog/includes/experiencias.html" with exp=e %}
+    {% endblock expe %}
+    {% endfor %}
+</div>
+{% endblock experiencia %}
