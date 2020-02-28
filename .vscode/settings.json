@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "E:\\Anaconda3\\envs\\blog\\python.exe"
+    "python.pythonPath": "E:\\Anaconda3\\envs\\blog\\python.exe",
+    "licenser.author": "Patricio Muñoz",
+    "licenser.license": "GPLv3",
+    "licenser.projectName": "My auto-blog",
+    "licenser.useSingleLineStyle": true,
 }
