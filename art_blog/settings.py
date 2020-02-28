@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'u70*!#4z=pv^mav@29j0kr)0w57j^$0tf6(wmql((frv1b4woo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -77,14 +77,18 @@ WSGI_APPLICATION = 'art_blog.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'NAME': 'art_blog',
-        'USER': 'django',
-        'PASSWORD': 'django_art_blog2020',
-        'PORT': '3306'
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'HOST': 'localhost',
+    #     'NAME': 'art_blog',
+    #     'USER': 'root',
+    #     'PASSWORD': '',
+    #     'PORT': '3306'
 
+    # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -133,16 +137,16 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-SESSION_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
 
-CSRF_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
 
-SECURE_BROWSER_XSS_FILTER = True
+#SECURE_BROWSER_XSS_FILTER = True
 
-SECURE_CONTENT_TYPE_NOSNIFF = True
+#SECURE_CONTENT_TYPE_NOSNIFF = True
 
-X_FRAME_OPTIONS = 'DENY'
+#X_FRAME_OPTIONS = 'DENY'
 
-SECURE_REFERRER_POLICY = 'same-origin'
+#SECURE_REFERRER_POLICY = 'same-origin'
 
-SECURE_SSL_REDIRECT = False
+#SECURE_SSL_REDIRECT = False

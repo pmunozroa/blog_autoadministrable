@@ -1,0 +1,87 @@
+sudo apt-get update -y && sudo apt-get upgrade -y &&
+sudo apt install build-essential -y &&
+sudo apt-get install mysql-server -y &&
+sudo apt-get install libmysqlclient-dev -y
+en mysql:
+create user 'django'@'localhost' identified by 'django_art_blog2020';
+grant usage on *.* to 'django'@'localhost';
+create database art_blog;
+grant all privileges on art_blog.* to 'django'@'localhost';
+flush privileges;
+cd /home/web &&
+git clone https://github.com/pmunozroa/blog_autoadministrable.git
+sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl -y &&
+sudo -H pip3 install --upgrade pip &&
+sudo -H pip3 install virtualenv
+cd art_blog
+dentro del proyecto
+virtualenv art_blog_env
+source art_blog_env/bin/activate
+pip install django gunicorn psycopg2-binary
+python manage.py migrate
+python manage.py runserver 0.0.0.0:8000 -- OK
+sudo apt install gunicorn -y
+gunicorn --bind 0.0.0.0:8000 art_blog.wsgi -- OK
+deactivate -- SALIR DEL AMBIENTE VIRTUAL
+sudo nano /etc/systemd/system/gunicorn.socket
+    [Unit]
+    Description=gunicorn socket
+
+    [Socket]
+    ListenStream=/run/gunicorn.sock
+
+    [Install]
+    WantedBy=sockets.target
+sudo nano /etc/systemd/system/gunicorn.service
+    [Unit]
+    Description=gunicorn daemon
+    Requires=gunicorn.socket
+    After=network.target
+
+    [Service]
+    User=web
+    Group=www-data
+    WorkingDirectory=/home/web/blog_autoadministrable
+    ExecStart=/home/web/blog_autoadministrable/art_blog_env/bin/gunicorn \
+            --access-logfile - \
+            --workers 3 \
+            --bind unix:/run/gunicorn.sock \
+            art_blog.wsgi:application
+    [Install]
+    WantedBy=multi-user.target
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+sudo systemctl status gunicorn.socket
+file /run/gunicorn.sock = /run/gunicorn.sock: socket
+sudo systemctl status gunicorn = DEBERIA ESTAR MUERTO (DEAD O INACTIVE)
+curl --unix-socket /run/gunicorn.sock localhost = DEBERIA DEVOLVER EL HOME O UN 404 SI NO HAY
+sudo systemctl status gunicorn = ACTIVE, DEBERIA MOSTRAR EL ULTIMO REQUEST HTTP CON curl
+sudo nano /etc/nginx/sites-available/art_blog
+server {
+    listen 80;
+    server_name 64.227.10.219;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/web/blog_autoadministrable;
+    }
+    location /media/ {
+        root /home/web/blog_autoadministrable;
+    }
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
+sudo ln -s /etc/nginx/sites-available/art_blog /etc/nginx/sites-enabled
+sudo nginx -t
+sudo systemctl restart nginx
+sudo chmod 755 -R static media
+
+EN CASO DE ALGUN TIPO DE CAMBIO:
+CAMBIO EN DJANGO -> sudo systemctl restart gunicorn
+CAMBIO EN SOCKET O DAEMON ->    sudo systemctl daemon-reload
+                                sudo systemctl restart gunicorn.socket gunicorn.service
+CAMBIO NGINX -> sudo nginx -t && sudo systemctl restart nginx
+
+REVISAR PERMISOS DE LA CARPETA DONDE ESTA EL PROYECTO, DEBE SER 755, si está en /home, debe ser 755
