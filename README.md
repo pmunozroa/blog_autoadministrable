@@ -1,19 +1,19 @@
 # Blog app
-Blog auto administable con curriculum auto generado en base a las categorias/posts
+Blog auto administable con curriculum auto generado en base a las categorias/posts, con contacto y redes sociales
 
-## Cómo empezar
+# Cómo empezar
 
 Se requiere servidor Linux con Nginx y Gunicorn
 
-### Instalacíon/Deploy
-######Esto fue probado en Digital Ocean con Linux Ubuntu 18.04
+## Instalacíon/Deploy
+>##### *Esto fue probado en Digital Ocean con Linux Ubuntu 18.04*
 
 En caso de que el servidor haya sido recién levantado
 
 ```
 sudo apt-get update -y && sudo apt-get upgrade -y
 ```
-Recomiendo no tener instalado previamente Apache para prevenedir cualquier incoveniente
+> Recomiendo no tener instalado previamente Apache para prevenedir cualquier incoveniente
 
 Instalación de las librerías básicas requeridas
 ```
@@ -47,11 +47,10 @@ En caso de tener Firewall activo
 ufw allow OpenSSH
 ```
 
-En caso de no tener conocimientos de configuración sobre ufw
-
-```
-ufw disable
-```
+>En caso de no tener conocimientos de configuración sobre ufw
+>```
+>ufw disable
+>```
 
 Sincronizar el nuevo usuario para acceder a SSH
 
@@ -68,12 +67,12 @@ Clonamos el repositorio
 ```
 git clone https://github.com/pmunozroa/blog_autoadministrable.git
 ```
-Accedemos
-
 >Recomiendo hacer un cambio de permisos para evitar problemas más adelante
 >```
 >chmod 755 -R /home/<user>
 >```
+
+Accedemos
 
 ```
 cd blog_autoadministrable/
@@ -100,20 +99,20 @@ Probamos que el proyecto corra sin problemas
 ```
 python manage.py runserver 0.0.0.0:8000
 ```
-En este punto, el proyecto debería ser accesible remotamente usando la IP del servidor :8000
+>*En este punto, el proyecto debería ser accesible remotamente usando la IP del servidor :8000*
 
 Ahora probamos usando Gunicorn
 ```
 gunicorn --bind 0.0.0.0:8000 art_blog.wsgi
 ```
-Lo mismo que lo anterior, si todo funciona, el servidor debería seguir siendo accesible, aunque esta vez sin estilos
+>*Lo mismo que lo anterior, si todo funciona, el servidor debería seguir siendo accesible, aunque esta vez sin estilos*
 
 Salimos del ambiente virtual
 ```
 deactivate
 ```
-###Levantando el socket Gunicorn y Nginx
-####Gunicorn
+# Levantando el socket Gunicorn y Nginx
+## Gunicorn
 Configuración del socket
 ```
 sudo nano /etc/systemd/system/gunicorn.socket
@@ -173,15 +172,15 @@ Probamos a ver si responde
 ```
 curl --unix-socket /run/gunicorn.sock localhost
 ```
-Deberia retornar la página de inicio, si no devuelve nada, aún no es necesario preocuparse
+>*Deberia retornar la página de inicio, si no devuelve nada, aún no es necesario preocuparse*
 
 Volvemos a comprobar el estado de Gunicorn
 ```
 sudo systemctl status gunicorn
 ```
-Esta vez debería estar Activo y en el Log aparecería el último request
+>*Esta vez debería estar Activo y en el Log aparecería el último request*
 
-####Nginx
+## Nginx
 Creamos la configuración del sitio para que responda el puerto 80
 ```
 sudo nano /etc/nginx/sites-available/<nombre-sitio>
@@ -219,7 +218,7 @@ sudo systemctl restart nginx
 ```
 Ya con esto, la página deberia ser accesible desde cualquier parte solamente poniendo la ip del servidor, sin el puerto, queda a su elección si poner el dominio, HTTPS y SSL
 
-#####Ante cualquier cambio, ejecutar los siguientes comandos
+# Ante cualquier cambio, ejecutar los siguientes comandos
 Cambios en el proyecto
 ```
 sudo systemctl restart gunicorn
@@ -234,7 +233,7 @@ Cambios en configuración Nginx
 sudo nginx -t && sudo systemctl restart nginx
 ```
 
-####Logs
+# Logs
 Log del proceso Nginx
 ```
 sudo journalctl -u nginx
@@ -256,5 +255,5 @@ Log del socket Gunicorn
 sudo journalctl -u gunicorn.socket
 ```
 
-###Guía original
+# Guía original
 [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04)
