@@ -1,3 +1,11 @@
+.hydrated {
+  font-family: 'Roboto' !important;
+}
+
+ul.nav>li>a, ul.nav>li>div>a{
+  text-align: center!important;
+}
+
 .custom-footer{
     position: fixed;
     bottom: 0;
@@ -6,3 +14,31 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+.unstyled-a{
+  text-decoration: none;
+}
+.lanidng-page>.portfolio-block.block-intro, .page.cv-page>.portfolio-block.block-intro{
+  padding-bottom:25px;
+}
+
+.lanidng-page>.portfolio-block.projects.compact-grid, .page.cv-page>.portfolio-block.cv{
+  padding-top: 0px;
+  padding-bottom: 10px;
+}
+
+.page.cv-page>.portfolio-block.cv>.container>.group.preview{
+  padding-bottom: 50px;
+}
+
+.more-projects>h3.text-center{
+  margin-bottom: 0px !important;
+}
+
+.more-projects>.portfolio-block.projects.compact-grid{
+  padding-top: 25px !important;
+  padding-bottom: 0px !important;
+}
+
+.custom-item-link{
+  font-weight: bold; color:white
+}
