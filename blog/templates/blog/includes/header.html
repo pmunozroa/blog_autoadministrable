@@ -17,7 +17,10 @@
             <a class="btn btn-outline-primary" role="button" href="{% url 'blog:apoyo' %}">Apóyame</a>
         </div>
         {% else %}
-        <p class="lead"><strong>{{configuracion.nombre_completo}}</strong></p>
+        <p>
+            <strong>{{configuracion.nombre_completo}}</strong><br>
+            <span class="badge badge-secondary">{{configuracion.run}}</span>
+        </p>
         <div class="about-me">
             <span class="form-text text-muted">{{configuracion.descripcion_general|safe}}</span>
         </div>

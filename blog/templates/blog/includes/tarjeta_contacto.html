@@ -1,21 +1,21 @@
 {% block tarjeta %}
 {% load blog_extras %}
-<div class="group">
+<div class="group preview">
     <div class="row">
         <div class="col-md-6">
             <div class="skills portfolio-info-card">
                 <h2>Habilidad</h2>
-                {% preview_posts as all_posts %}
+                {% total_posts as all_posts %}
                 {% get_order_cat_by_total_posts as order_cats %}
                 {% for cat in order_cats %}
-                <h3>{{cat.nombre}}</h3>
-                <div class="progress">
-                    {% count_posts cat.id as cat_posts %}
-                    <div class="progress-bar" aria-valuenow="{{cat_posts}}" aria-valuemin="0"
-                        aria-valuemax="{{all_posts|length}}"
-                        style="width: {% get_percentage all_posts|length cat_posts %}%;"><span class="sr-only"></span>
+                    <h3>{{cat.nombre}}</h3>
+                    <div class="progress">
+                        {% count_posts cat.id as cat_posts %}
+                        <div class="progress-bar" aria-valuenow="{{cat_posts}}" aria-valuemin="0"
+                            aria-valuemax="{{all_posts}}"
+                            style="width: {% get_percentage all_posts cat_posts %}%;"><span class="sr-only"></span>
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>

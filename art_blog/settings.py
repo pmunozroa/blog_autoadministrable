@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'ckeditor',
     'taggit',
     'blog',
@@ -65,6 +66,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blog.context_processors.get_config',
+                'blog.context_processors.get_rrss',
+                'blog.context_processors.get_cats',
+
             ],
         },
     },

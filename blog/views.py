@@ -5,6 +5,13 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .models import *
 from .forms import ContactoForm
 from itertools import chain
+from django.db.models import Q
+
+def filter_posts(filter_string):
+    query = Q(titulo__icontains=filter_string)
+    query.add(Q(descripcion__icontains=filter_string), Q.OR)
+    query.add(Q(tags__name__icontains=filter_string), Q.OR)
+    return Post.objects.filter(query).order_by('-fecha_creacion').distinct()
 
 class LoadPageConfig():
     def dispatch(self, request, *args, **kwargs):
@@ -31,25 +38,21 @@ class CategoriasView(LoadPageConfig, ListView):
         else:
             return context
 
-class CategoriasPostsView(LoadPageConfig, ListView):
-    model = Post
-    template_name = "blog/categorias.html"
-    context_object_name = "posts"
-    ordering = ['-fecha_creacion']
-    paginate_by = 9
-
-    def get_queryset(self):
-        context = super().get_queryset()
-        cat_pk = self.kwargs.get('pk', False)
-        if cat_pk != None:
-            return Post.objects.filter(categoria=cat_pk).order_by('-fecha_creacion')
-
 class PostsView(LoadPageConfig, ListView):
     model = Post
     template_name = "blog/posts.html"
     context_object_name = "posts"
     ordering = ['-fecha_creacion']
     paginate_by = 9
+
+    def get_queryset(self):
+        context = super().get_queryset()
+        if self.kwargs.get('q', False):
+            return filter_posts(self.kwargs.get('q'))
+        elif self.request.GET.get('q', False):
+            return filter_posts(self.request.GET.get('q'))
+        else:
+            return context
 
 class ContactoView(SuccessMessageMixin, LoadPageConfig, CreateView):
     form_class = ContactoForm
@@ -81,3 +84,9 @@ class BannersView(LoadPageConfig, ListView):
 
     def get_queryset(self):
           return Banners.objects.filter(activo=True)
+
+def request_filter_posts(request):
+    if request.method == 'POST':
+        query_string = request.POST.get('q', False)
+        if query_string:
+            return render(request, 'blog/includes/post.html', {'posts': filter_posts(query_string)})

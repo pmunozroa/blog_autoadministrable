@@ -56,15 +56,15 @@ class ConfiguracionBasica(models.Model):
     banner = models.ImageField(upload_to="page/")
     avatar = models.ImageField(upload_to="page/")
     nombre = models.CharField(max_length=50)
-    apodo = models.CharField(max_length=50)
-    descripcion_corta = models.CharField(max_length=100)
-    descripcion_general = models.CharField(max_length=250)
+    apodo = models.CharField(max_length=25)
+    descripcion_corta = models.TextField()
+    descripcion_general = models.TextField()
     nombre_completo = models.CharField(max_length=250)
     run = models.CharField(max_length=12, help_text="Formato sugerido XX.XXX.XXX-X, no está validado, así que depende de tí")
     email_contacto = models.EmailField()
     numero_contacto = models.CharField(max_length=8, help_text="No añadir el +569")
     fecha_nacimiento = models.DateField()
-    hobbies = models.CharField(max_length=100)
+    hobbies = TaggableManager(verbose_name="Hobbies")
     activo = models.BooleanField(default=True)
     share_this = models.URLField(blank=True, null=True, help_text="https://sharethis.com/onboarding/")
 
@@ -117,7 +117,7 @@ class Curriculum(models.Model):
     nombre_cargo = models.CharField(max_length=50, help_text="Cargo, Carrera, Curso o Tipo de enseñanza")
     fecha_inicio = models.DateField()
     fecha_termino = models.DateField(blank=True, null=True, help_text="Dejar en blanco si aún estás trabajando")
-    descripcion = models.CharField(max_length=250, blank=True, null=True)
+    descripcion = models.TextField(blank=True, null=True)
     activo = models.BooleanField(default=True, verbose_name="Mostrar?")
 
     def __str__(self):

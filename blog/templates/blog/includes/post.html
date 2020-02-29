@@ -1,8 +1,16 @@
-<div class="col-md-4 col-lg-4">
-    <div class="card border-0"><a href="{% url 'blog:post' post.id post.titulo|slugify %}"><img class="card-img-top scale-on-hover" style="max-height: 300px;min-height: 300px; min-width: 100%; max-width: 100%" src="{{post.imagen.url}}"></a>
-        <div class="card-body">
-            <h6>{{post.titulo}}</h6>
-            <p class="text-muted card-text">{{post.descripcion|truncatechars:50|safe}} </p>
-        </div>
-    </div>
+{% for post in posts %}
+<div class="col-md-6 col-lg-4 item zoom-on-hover">
+    <a href="{% url 'blog:post_view' post.id post.titulo|slugify %}">
+        <img class="img-fluid image" style="float:left;width:100%;height:250px;object-fit:cover;"
+            src="{{post.imagen.url}}">
+        <span class="description">
+            <span class="description-heading">{{post.titulo}}</span>
+            <span class="description-body">{{post.descripcion|safe|truncatewords_html:20}}</span>
+        </span>
+    </a>
 </div>
+{% empty %}
+<div class="col-md-12 col-lg-12 text-center">
+    <p class="lead">No hay ningun post :(</p>
+</div>
+{% endfor %}

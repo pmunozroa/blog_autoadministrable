@@ -5,25 +5,30 @@ Todos los posts
 {% endblock title %}
 
 {% block content %}
-<main class="page projects-page" style="height: 100%">
-    <section class="portfolio-block projects-cards">
-        <div class="container">
-            <div class="heading">
-                <h2>Todos los posts</h2>
-            </div>
-            <div class="row">
-                {% for p in posts %}
-                {% include "blog/includes/post.html" with post=p %}
-                {% empty %}
-                <div class="col-md-12 col-lg-12 text-center">
-                    <p class="lead">No hay ningun post :(</p>
-                </div>
-                {% endfor %}
-            </div>
-            {% block pagination %}
-            {% include "blog/includes/pagination.html" %}
-            {% endblock pagination %}
+{% load static %}
+<main class="page projets-page">
+    <section class="portfolio-block projects compact-grid">
+        <div class="heading">
+            <h2>Todos los posts</h2>
+            <form data-filter-url="{% url 'blog:post_filter' %}" id="form-filter" method="get">
+                {% csrf_token %}
+                <label for="q">Filtrar posts</label>
+                <input type="text" name="q" id="filter-input" placeholder="Buscar titulo, contenido o tags" class="form-control">
+                <br>
+                <input type="button" id="clear" class="btn btn-primary btn-block form-control" value="Limpiar">
+            </form>
         </div>
+        <div class="row no-gutters" id="main">
+            {% include "blog/includes/post.html" with posts=posts %}
+        </div>
+        <div class="row no-gutters" id="filter" style="display:none">
+
+        </div>
+        {% block pagination %}
+        <br>
+        {% include "blog/includes/pagination.html" %}
+        {% endblock pagination %}
     </section>
 </main>
+<script src="{% static 'blog/assets/custom-js.js' %}"></script>
 {% endblock content %}

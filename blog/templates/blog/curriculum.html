@@ -12,7 +12,6 @@ Curriculum
     {% endblock header %}
     <section class="portfolio-block cv">
         <div class="container">
-            <!-- REHACER LAS EXPERIENCIAS Y AÑADIR TIPOS DE EXPERIENCIAS COMO MODELO -->
             {% for exp in experiencias %}
             {% get_exp_by_cat exp.id as cv_exp %}
                 {% if cv_exp|length > 0 %}

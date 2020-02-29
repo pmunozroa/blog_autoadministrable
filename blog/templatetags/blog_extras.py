@@ -14,28 +14,21 @@ def is_active(reverse, url):
     return ''
 
 @register.simple_tag
-def is_active_category(reverse, cat_id, cat_slug, url):
+def is_active_category(reverse, cat_id = False, cat_slug = False, url = False):
     reversa = reverse_lazy(reverse)
-    param = f'{reversa}{cat_id}/{cat_slug}/'
-    if url == param:
-        return 'active'
-    return ''
+    params = None
+    if cat_id and cat_slug:
+        params = f"{cat_id}/{cat_slug}"
+    if params is not None:
+        if url == f"{reversa}{params}" or url == f"{reversa}{params}/":
+            return 'btn-primary'
+    elif url == f"{reversa}":
+        return 'btn-primary'
+    return 'btn-light'
 
 @register.simple_tag
-def get_configuration():
-    return ConfiguracionBasica.objects.filter(activo=True).order_by('posicion').first()
-
-@register.simple_tag
-def get_rrss():
-    return Enlace.objects.all()
-
-@register.simple_tag
-def preview_posts():
-    return Post.objects.all().order_by('-fecha_creacion')
-
-@register.simple_tag
-def get_cats():
-    return Categoria.objects.all()
+def preview_posts(total_posts):
+    return Post.objects.all().order_by('-fecha_creacion')[:total_posts]
 
 @register.filter
 def get_cat_name(cat_id):
@@ -47,6 +40,10 @@ def get_cat_name(cat_id):
 @register.simple_tag
 def count_posts(cat_id):
     return Post.objects.filter(categoria=cat_id).count()
+
+@register.simple_tag
+def total_posts():
+    return Post.objects.all().count()
 
 @register.simple_tag
 def get_percentage(total_posts, post_cat):

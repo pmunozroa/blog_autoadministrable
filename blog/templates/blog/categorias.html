@@ -4,7 +4,8 @@
 
 {% block title %}
 
-Categorias{% if request.resolver_match.kwargs.pk|get_cat_name %}{{ request.resolver_match.kwargs.pk|get_cat_name }}{%else%} | Todas{% endif %}
+Categorias{% if request.resolver_match.kwargs.pk|get_cat_name %}{{ request.resolver_match.kwargs.pk|get_cat_name }}{%else%}
+| Todas{% endif %}
 {% endblock title %}
 
 {% block content %}
@@ -17,13 +18,21 @@ Categorias{% if request.resolver_match.kwargs.pk|get_cat_name %}{{ request.resol
             <div class="row">
                 <div class="col-md-3">
                     <ul class="list-unstyled sidebar">
-                        <li><a class="{% is_active 'blog:categorias' request.path %}"
-                                href="{% url 'blog:categorias' %}">Todos</a></li>
+                        <li>
+                            <a href="{% url 'blog:categorias' %}">
+                                <button type="button" class="btn {% is_active_category 'blog:categorias' url=request.path %}">
+                                    Todos <span class="badge badge-light">{% total_posts %}</span>
+                                    <span class="sr-only">unread messages</span>
+                                </button>
+                            </a>
+                        </li>
                         {% for cat in categorias_listado %}
                         <li>
-                            <a class="{% is_active_category 'blog:categorias' cat.id cat.nombre|slugify request.path %}"
-                                href="{% url 'blog:categorias' cat.id cat.nombre|slugify %}">
-                                {{cat.nombre}}
+                            <a href="{% url 'blog:categorias' cat.id cat.nombre|slugify %}">
+                                <button type="button" class="btn {% is_active_category 'blog:categorias' cat.id cat.nombre|slugify request.path %}">
+                                    {{cat.nombre}} <span class="badge badge-light">{% count_posts cat.id %}</span>
+                                    <span class="sr-only">unread messages</span>
+                                </button>
                             </a>
                         </li>
                         {% endfor %}
@@ -32,7 +41,13 @@ Categorias{% if request.resolver_match.kwargs.pk|get_cat_name %}{{ request.resol
                 <div class="col-md-9">
                     <div class="row">
                         {% for post in  posts %}
-                        {% include "blog/includes/post.html" with post=post %}
+                        <div class="col-md-6 col-lg-4 project-sidebar-card">
+                            <a href="{% url 'blog:post_view' post.id post.titulo|slugify %}">
+                                <img class="img-fluid image scale-on-hover"
+                                    style="max-height: 170px;min-height: 170px; min-width: 100%; max-width: 100%"
+                                    src="{{post.imagen.url}}">
+                            </a>
+                        </div>
                         {% empty %}
                         <div class="col-md-126 col-lg-12 text-center">
                             <p class="lead">No hay ningun post :(</p>

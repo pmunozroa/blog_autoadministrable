@@ -13,17 +13,11 @@ Blog de {{configuracion.apodo}}
 {% include "blog/includes/header.html" with extras=True %}
 {% endblock header %}
 {% load blog_extras %}
-<section class="portfolio-block photography">
+<section class="portfolio-block projects compact-grid">
     <div class="container">
         <div class="row no-gutters">
-            {% preview_posts as posts %}
-            {% for post in posts|slice:3 %}
-                {% include "blog/includes/post.html" with post=post %}
-            {% empty %}
-            <div class="col-md-12 col-lg-12 text-center">
-                <p class="lead">No hay nuevo contenido :(</p>
-            </div>
-            {% endfor %}
+            {% preview_posts 3 as posts %}
+            {% include "blog/includes/post.html" with posts=posts %}
         </div>
     </div>
 </section>
