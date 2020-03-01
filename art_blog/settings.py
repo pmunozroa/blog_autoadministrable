@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'u70*!#4z=pv^mav@29j0kr)0w57j^$0tf6(wmql((frv1b4woo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['<ip>','localhost', '127.0.0.1']
 
 
 # Application definition
@@ -69,7 +69,6 @@ TEMPLATES = [
                 'blog.context_processors.get_config',
                 'blog.context_processors.get_rrss',
                 'blog.context_processors.get_cats',
-
             ],
         },
     },
@@ -82,19 +81,19 @@ WSGI_APPLICATION = 'art_blog.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'HOST': 'localhost',
-    #     'NAME': 'art_blog',
-    #     'USER': 'root',
-    #     'PASSWORD': '',
-    #     'PORT': '3306'
-
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'NAME': 'art_blog',
+        'USER': 'root',
+        'PASSWORD': '',
+        'PORT': '3306'
+
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
 }
 
 
